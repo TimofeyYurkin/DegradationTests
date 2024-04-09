@@ -8,6 +8,7 @@ parser.add_argument('name', required=True, type=str)
 parser.add_argument('email', required=True, type=str)
 parser.add_argument('password', required=True, type=str)
 
+
 def abort_if_user_not_found(user_id):
     session = db_session.create_session()
     user = session.query(User).get(user_id)

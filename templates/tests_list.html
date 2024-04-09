@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="static/css/main_pages.css" />
+{% endblock %}
+
+{% block content %}
+    <div class="content_display">
+        {% if current_user.is_authenticated %}
+            <h2>Проходите и создавайте тесты!</h2>
+            <a href="/choose_type" class="btn btn-secondary">Создать тест</a>
+        {% else %}
+            <h2>Зайдите в аккаунт или зарегистрируйтесь, чтобы начать работу.</h2>
+        {% endif %}
+    </div>
+{% endblock %}
