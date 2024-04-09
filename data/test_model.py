@@ -1,5 +1,4 @@
 import sqlalchemy
-from sqlalchemy_file import ImageField
 from sqlalchemy_serializer import SerializerMixin
 from .db_session import SqlAlchemyBase
 
@@ -11,7 +10,6 @@ class Test(SqlAlchemyBase, SerializerMixin):
     creator = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'))
     title = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     description = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    cover = sqlalchemy.Column(ImageField(thumbnail_size=(512, 512)), nullable=False)
     status = sqlalchemy.Column(sqlalchemy.Boolean, nullable=False)
 
     user = sqlalchemy.orm.relationship('User')
