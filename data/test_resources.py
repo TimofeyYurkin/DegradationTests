@@ -8,9 +8,6 @@ parser.add_argument('type', required=True, type=int)
 parser.add_argument('creator', required=True, type=int)
 parser.add_argument('title', required=True, type=str)
 parser.add_argument('description', required=True, type=str)
-parser.add_argument('cover', required=True, type=bytes)
-parser.add_argument('questions', required=True, type=bytes)
-parser.add_argument('answers', required=True, type=bytes)
 parser.add_argument('status', required=True, type=bool)
 
 
@@ -26,8 +23,7 @@ class TestResource(Resource):
         abort_if_test_not_found(test_id)
         session = db_session.create_session()
         test = session.query(Test).get(test_id)
-        return jsonify({'test': test.to_dict(only=('type', 'creator', 'title', 'description', 'cover', 'questions',
-                                                   'answers', 'status'))})
+        return jsonify({'test': test.to_dict(only=('type', 'creator', 'title', 'description', 'status'))})
 
     def delete(self, test_id):
         abort_if_test_not_found(test_id)
@@ -42,8 +38,8 @@ class TestListResource(Resource):
     def get(self):
         session = db_session.create_session()
         tests = session.query(Test).all()
-        return jsonify({'tests': item.to_dict(only=('type', 'creator', 'title', 'description', 'cover', 'questions',
-                                                    'answers', 'status')) for item in tests})
+        return jsonify({'tests': item.to_dict(only=('id', 'type', 'creator', 'title', 'description', 'status'))
+                        for item in tests})
 
     def post(self):
         args = parser.parse_args()
@@ -53,9 +49,6 @@ class TestListResource(Resource):
             creator=args['creator'],
             title=args['title'],
             description=args['description'],
-            cover=args['cover'],
-            questions=args['questions'],
-            answers=args['answers'],
             status=args['status']
         )
         session.add(test)

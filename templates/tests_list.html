@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block style %}
-    <link rel="stylesheet" type="text/css" href="static/css/main_pages.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/main_styles.css" />
 {% endblock %}
 
 {% block content %}
-    <div class="content_display">
+    <div class="content_display_list">
         {% if current_user.is_authenticated %}
             <h2>Проходите и создавайте тесты!</h2>
             <a href="/choose_type" class="btn btn-secondary">Создать тест</a>

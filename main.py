@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, request, abort
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_restful import Api
 from requests import get, post, delete
-from data import db_session, user_resources, test_resources
+from data import db_session, user_resources, test_resources, question_resources, answer_resources, results_resources
 from forms.user_forms import RegisterForm, LoginForm, DeleteForm
 from data.user_model import User
 
@@ -24,6 +24,18 @@ def main():
     # Ресурсы для тестов
     api.add_resource(test_resources.TestResource, '/api/tests/<int:test_id>')
     api.add_resource(test_resources.TestListResource, '/api/tests')
+
+    # Ресурсы для вопросов
+    api.add_resource(question_resources.QuestionResource, '/api/questions/<int:question_id>')
+    api.add_resource(question_resources.QuestionListResource, '/api/questions')
+
+    # Ресурсы для ответов
+    api.add_resource(answer_resources.AnswerResource, '/api/answers/<int:answer_id>')
+    api.add_resource(answer_resources.AnswerListResource, '/api/answers')
+
+    # Ресурсы для результатов
+    api.add_resource(results_resources.ResultResource, '/api/results/<int:result_id>')
+    api.add_resource(results_resources.ResultListResource, '/api/results')
 
     db_session.global_init('db/degradation_tests.db')
     app.run(port=8080)

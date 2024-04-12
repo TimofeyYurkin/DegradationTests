@@ -8,13 +8,10 @@ class Test(SqlAlchemyBase, SerializerMixin):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     type = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
-    creator = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    title = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    description = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    cover = sqlalchemy.Column(sqlalchemy.BINARY, nullable=False)
-    questions = sqlalchemy.Column(sqlalchemy.BINARY, nullable=False)
-    answers = sqlalchemy.Column(sqlalchemy.BINARY, nullable=False)
-    results = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('results.id'))
+    creator = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), nullable=False)
+    title = sqlalchemy.Column(sqlalchemy.String(20), nullable=False)
+    description = sqlalchemy.Column(sqlalchemy.String(100), nullable=False)
     status = sqlalchemy.Column(sqlalchemy.Boolean, nullable=False)
 
-    result = sqlalchemy.orm.relationship('Results')
+    user = sqlalchemy.orm.relationship('User')
+    question = sqlalchemy.orm.relationship('Question', back_populates='test')

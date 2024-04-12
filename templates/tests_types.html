@@ -1,12 +1,27 @@
 {% extends "base.html" %}
 
 {% block style %}
-    <link rel="stylesheet" type="text/css" href="static/css/main_pages.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/main_styles.css" />
 {% endblock %}
 {% block content %}
-    <div class="content_display">
-        <a href="/choose_type/1" class="btn btn-secondary">Кто ты... ?</a>
-        <a href="/choose_type/2" class="btn btn-secondary">На сколько процентов ты совместим с ... ?</a>
-        <a href="/choose_type/3" class="btn btn-secondary">Насколько ты ... ?</a>
+    <div class="content_display_choose">
+        <a href="/choose_type/1" class="btn" style="width: 30%; height: 30%; background-color: #f0f0f0;">
+            <figure>
+                <figcaption class="up_cover"><h3>Какой ты ... ?</h3></figcaption>
+                <img src="static/images/tests_types/type1.jpg" class="cover">
+            </figure>
+        </a>
+        <a href="/choose_type/2" class="btn" style="width: 30%; height: 30%; background-color: #f0f0f0;">
+            <figure>
+                <figcaption class="up_cover"><h3>Проверка совместимости</h3></figcaption>
+                <img src="static/images/tests_types/type2.jpg" class="cover">
+            </figure>
+        </a>
+        <a href="/choose_type/3" class="btn" style="width: 30%; height: 30%; background-color: #f0f0f0;">
+            <figure>
+                <figcaption class="up_cover"><h3>Проверка схожести</h3></figcaption>
+                <img src="static/images/tests_types/type3.jpg" class="cover">
+            </figure>
+        </a>
     </div>
 {% endblock %}

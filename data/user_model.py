@@ -13,6 +13,8 @@ class User(SqlAlchemyBase, SerializerMixin, UserMixin):
     email = sqlalchemy.Column(sqlalchemy.String, nullable=False, unique=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=False)
 
+    test = sqlalchemy.orm.relationship('Test', back_populates='user')
+
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
 
