@@ -9,11 +9,5 @@ div.content_display_choose {
     justify-content: space-between;
     padding-left: 20%;
     padding-right: 20%;
-    padding-top: 12%;
-}
-
-img.cover {
-    border-radius: 10px;
-    width: 350px;
-    height: 350px;
+    padding-top: 3%;
 }

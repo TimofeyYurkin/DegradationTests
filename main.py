@@ -4,6 +4,7 @@ from flask_restful import Api
 from requests import get, post, delete
 from data import db_session, user_resources, test_resources, question_resources, answer_resources, results_resources
 from forms.user_forms import RegisterForm, LoginForm, DeleteForm
+from forms.test_forms import TestPercentForm, TestNumbersForm
 from data.user_model import User
 
 
@@ -117,6 +118,23 @@ def load_user(user_id):
 @login_required
 def choose_type():
     return render_template('tests_types.html', title='Выбор типа теста')
+
+
+@app.route('/choose_type/<int:test_type>')
+@login_required
+def make_test(test_type):
+    if test_type == 1:
+        form = TestNumbersForm()
+    elif test_type == 2 or test_type == 3:
+        form = TestPercentForm()
+    if form.validate_on_submit():
+        return redirect('/')
+    if test_type == 1:
+        return render_template('create_test_t1.html', title='Создание теста', form=form)
+    elif test_type == 2:
+        return render_template('create_test_t2.html', title='Создание теста', form=form)
+    elif test_type == 3:
+        return render_template('create_test_t3.html', title='Создание теста', form=form)
 
 
 if __name__ == '__main__':

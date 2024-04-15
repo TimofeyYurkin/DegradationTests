@@ -6,24 +6,24 @@
 
 {% block content %}
     <form action="" method="post" class="user_form">
-        <h1>Авторизация</h1>
+        <h2>Авторизация</h2>
         {{ form.hidden_tag() }}
         <p>
             {{ form.email.label }}<br>
             {{ form.email(class="form-control", type="email") }}<br>
             {% for error in form.email.errors %}
-                <div class="alert alert-danger" role="alert">
+                <p class="alert alert-danger" role="alert">
                     {{ error }}
-                </div>
+                </p>
             {% endfor %}
         </p>
         <p>
             {{ form.password.label }}<br>
             {{ form.password(class="form-control", type="password") }}<br>
             {% for error in form.password.errors %}
-                <div class="alert alert-danger" role="alert">
+                <p class="alert alert-danger" role="alert">
                     {{ error }}
-                </div>
+                </p>
             {% endfor %}
         </p>
         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>

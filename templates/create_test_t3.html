@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="static/css/forms.css" />
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post" style="margin-left: auto; margin-right: auto; max-width: 600px; margin-top: 3%;
+    margin-bottom: 3%; background-color: #f0f0f0; border-radius: 10px; padding: 25px;">
+        <a class="btn btn-secondary" style="width: 20%; height: 35px;" href="/choose_type">Назад</a>
+        <hr size="5px" color="#242424">
+        <h2>Тест: проверка схожести</h2>
+        {{ form.hidden_tag() }}
+        <p>
+            <hr size="5px" color="#242424">
+            <h5><b>Дополните: "Насколько вы ... "</b></h5>
+            {{ form.test_title(class="form-control") }}
+            {% for error in form.test_title.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        {% for question in form.questions %}
+            <p>
+                <hr size="5px" color="#242424">
+                <h5><b>{{ question.title.label }} №{{ loop.index }}:</b></h5>
+                {{ question.title(class="form-control") }}
+                {% for error in question.title.errors %}
+                    <p class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+                <hr size="5px" color="#242424">
+
+                <p>
+                    <div><b>
+                        {{ question.answer_1.label }}
+                        Процент:
+                    </b></div>
+                    <div class="input-group">
+                        {{ question.answer_1(class="form-control", style="width: 75%") }}
+                        {{ question.choose_per_1(class="form-control", style="width: 25%") }}
+                        {% for error in question.answer_1.errors %}
+                            <p class="alert alert-danger" role="alert">
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                </p>
+
+                <p>
+                    <div><b>
+                        {{ question.answer_2.label }}
+                        Процент:
+                    </b></div>
+                    <div class="input-group">
+                        {{ question.answer_2(class="form-control", style="width: 75%") }}
+                        {{ question.choose_per_2(class="form-control", style="width: 25%") }}
+                        {% for error in question.answer_2.errors %}
+                            <p class="alert alert-danger" role="alert">
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                </p>
+
+                <p>
+                    <div><b>
+                        {{ question.answer_3.label }}
+                        Процент:
+                    </b></div>
+                    <div class="input-group">
+                        {{ question.answer_3(class="form-control", style="width: 75%") }}
+                        {{ question.choose_per_3(class="form-control", style="width: 25%") }}
+                        {% for error in question.answer_3.errors %}
+                            <p class="alert alert-danger" role="alert">
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                </p>
+
+                <p>
+                    <div><b>
+                        {{ question.answer_4.label }}
+                        Процент:
+                    </b></div>
+                    <div class="input-group">
+                        {{ question.answer_4(class="form-control", style="width: 75%") }}
+                        {{ question.choose_per_4(class="form-control", style="width: 25%") }}
+                        {% for error in question.answer_4.errors %}
+                            <p class="alert alert-danger" role="alert">
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                </p>
+            </p>
+        {% endfor %}
+        <hr size="5px" color="#242424">
+        <h5><b>Результаты</b></h5>
+        <hr size="5px" color="#242424">
+        <p>
+            <b>{{ form.result_per_1.label }}</b><br>
+            {{ form.result_per_1(class="form-control") }}
+            {% for error in form.result_per_1.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            <b>{{ form.result_per_2.label }}</b><br>
+            {{ form.result_per_2(class="form-control") }}
+            {% for error in form.result_per_2.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            <b>{{ form.result_per_3.label }}</b><br>
+            {{ form.result_per_3(class="form-control") }}
+            {% for error in form.result_per_3.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            <b>{{ form.result_per_4.label }}</b><br>
+            {{ form.result_per_4(class="form-control") }}
+            {% for error in form.result_per_4.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>{{ form.privacy() }} <b>{{ form.privacy.label }}</b></p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary", style="width: 20%; height: 35px;") }}</p>
+        <div>{{ message }}</div>
+    </form>
+{% endblock %}

@@ -6,7 +6,7 @@
 
 {% block content %}
     <form action="" method="post" class="user_form">
-        <h1>Регистрация</h1>
+        <h2>Регистрация</h2>
         {{ form.hidden_tag() }}
         <p>
             {{ form.name.label }}<br>
@@ -45,6 +45,6 @@
             {% endfor %}
         </p>
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-        {{ message }}
+        <div>{{ message }}</div>
     </form>
 {% endblock %}

@@ -3,25 +3,47 @@
 {% block style %}
     <link rel="stylesheet" type="text/css" href="static/css/main_styles.css" />
 {% endblock %}
+
 {% block content %}
+    <h1 style="text-align: center; padding-top: 4%">Выбор шаблона</h1>
     <div class="content_display_choose">
-        <a href="/choose_type/1" class="btn" style="width: 30%; height: 30%; background-color: #f0f0f0;">
-            <figure>
-                <figcaption class="up_cover"><h3>Какой ты ... ?</h3></figcaption>
-                <img src="static/images/tests_types/type1.jpg" class="cover">
-            </figure>
-        </a>
-        <a href="/choose_type/2" class="btn" style="width: 30%; height: 30%; background-color: #f0f0f0;">
-            <figure>
-                <figcaption class="up_cover"><h3>Проверка совместимости</h3></figcaption>
-                <img src="static/images/tests_types/type2.jpg" class="cover">
-            </figure>
-        </a>
-        <a href="/choose_type/3" class="btn" style="width: 30%; height: 30%; background-color: #f0f0f0;">
-            <figure>
-                <figcaption class="up_cover"><h3>Проверка схожести</h3></figcaption>
-                <img src="static/images/tests_types/type3.jpg" class="cover">
-            </figure>
-        </a>
+        <div class="card" style="width: 30%; background-color: #f0f0f0;">
+            <img src="static/images/tests_types/type1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Проверка личности</h5>
+                <p class="card-text" style="text-align: justify;">
+                    Создай тест, чтобы другие узнали побольше о себе. Например, каким бы они были фикусом? Придумай
+                    вопросы, ответы для них и варианты результата, к которым они ведут!
+                </p>
+                <a href="/choose_type/1" class="btn btn-primary" style="width: 100%;">
+                    Перейти к созданию</a>
+            </div>
+        </div>
+
+        <div class="card" style="width: 30%; background-color: #f0f0f0;">
+            <img src="static/images/tests_types/type2.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Проверка совместимости</h5>
+                <p class="card-text" style="text-align: justify;">
+                    Создай тест, а остальные узнают: была ли у них любовь с героем твоего теста (соболезнуем ему)
+                    и какая. Для этого создай вопросы, ответы и расставь проценты совместимости для них!
+                </p>
+                <a href="/choose_type/2" class="btn btn-primary" style="width: 100%;">
+                    Перейти к созданию</a>
+            </div>
+        </div>
+
+        <div class="card" style="width: 30%; background-color: #f0f0f0;">
+            <img src="static/images/tests_types/type3.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Проверка схожести</h5>
+                <p class="card-text" style="text-align: justify;">
+                    Создай тест, наконец-то другие смогут узнать как сильно они похожи на персонажа твоего теста.
+                    Для этого напиши вопросы, ответы и расставь проценты схожести для них!
+                </p>
+                <a href="/choose_type/3" class="btn btn-primary" style="width: 100%;">
+                    Перейти к созданию</a>
+            </div>
+        </div>
     </div>
 {% endblock %}
