@@ -120,14 +120,62 @@ def choose_type():
     return render_template('tests_types.html', title='Выбор типа теста')
 
 
-@app.route('/choose_type/<int:test_type>')
+@app.route('/choose_type/<int:test_type>', methods=['GET', 'POST'])
 @login_required
 def make_test(test_type):
     if test_type == 1:
         form = TestNumbersForm()
     elif test_type == 2 or test_type == 3:
         form = TestPercentForm()
-    if form.validate_on_submit():
+    if request.method == 'POST':
+        # Добавляю в БД основную информацию о тесте и получаю id для дальнейшего использования
+        test_id = post('http://127.0.0.1:8080/api/tests', json={
+            'type': test_type,
+            'creator': current_user.id,
+            'title': form.test_title.data,
+            'description': form.test_description.data,
+            'status': form.privacy.data
+        }).json()['test']
+
+        # Пробегаюсь по всем вопросам и ответам для них и добавляю в БД
+        for position, question in enumerate(form.questions, start=1):
+            question_id = post('http://127.0.0.1:8080/api/questions', json={
+                'test_id': test_id,
+                'position': position,
+                'text': question.title.data
+            }).json()['question']
+
+            post('http://127.0.0.1:8080/api/answers', json={
+                'question_id': question_id,
+                'text': question.answer_1.data,
+                'result': question.choose_num_1.data if test_type == 1 else question.choose_per_1.data
+            })
+
+            post('http://127.0.0.1:8080/api/answers', json={
+                'question_id': question_id,
+                'text': question.answer_2.data,
+                'result': question.choose_num_2.data if test_type == 1 else question.choose_per_2.data
+            })
+
+            post('http://127.0.0.1:8080/api/answers', json={
+                'question_id': question_id,
+                'text': question.answer_3.data,
+                'result': question.choose_num_3.data if test_type == 1 else question.choose_per_3.data
+            })
+
+            post('http://127.0.0.1:8080/api/answers', json={
+                'question_id': question_id,
+                'text': question.answer_4.data,
+                'result': question.choose_num_4.data if test_type == 1 else question.choose_per_4.data
+            })
+
+        # Добавляю в БД результаты
+        post('http://127.0.0.1:8080/api/results', json={
+            'comment_1': form.result_num_1.data if test_type == 1 else form.result_per_1.data,
+            'comment_2': form.result_num_2.data if test_type == 1 else form.result_per_2.data,
+            'comment_3': form.result_num_3.data if test_type == 1 else form.result_per_3.data,
+            'comment_4': form.result_num_4.data if test_type == 1 else form.result_per_4.data,
+        })
         return redirect('/')
     if test_type == 1:
         return render_template('create_test_t1.html', title='Создание теста', form=form)
