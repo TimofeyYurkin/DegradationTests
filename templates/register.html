@@ -2,11 +2,11 @@
 
 {% block content %}
     <form action="" method="post" class="user_form">
-        <h2>Регистрация</h2>
         {{ form.hidden_tag() }}
+        <h2>Регистрация</h2>
         <p>
             {{ form.name.label }}<br>
-            {{ form.name(class="form-control") }}<br>
+            {{ form.name(class="form-control", autocomplete="off") }}<br>
             {% for error in form.name.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
@@ -15,7 +15,7 @@
         </p>
         <p>
             {{ form.email.label }}<br>
-            {{ form.email(class="form-control", type="email") }}<br>
+            {{ form.email(class="form-control", type="email", autocomplete="off") }}<br>
             {% for error in form.email.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
@@ -24,7 +24,7 @@
         </p>
         <p>
             {{ form.password.label }}<br>
-            {{ form.password(class="form-control", type="password") }}<br>
+            {{ form.password(class="form-control", type="password", autocomplete="off") }}<br>
             {% for error in form.password.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
@@ -33,7 +33,7 @@
         </p>
         <p>
             {{ form.password_again.label }}<br>
-            {{ form.password_again(class="form-control", type="password") }}<br>
+            {{ form.password_again(class="form-control", type="password", autocomplete="off") }}<br>
             {% for error in form.password_again.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}

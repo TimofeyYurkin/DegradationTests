@@ -9,7 +9,7 @@
         <p>
             <hr size="5px" color="#242424">
             <h5><b>Дополните: "На сколько вы совместимы с ... ?"</b></h5>
-            {{ form.test_title(class="form-control") }}
+            {{ form.test_title(class="form-control", autocomplete="off") }}
             {% for error in form.test_title.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
@@ -20,7 +20,7 @@
             <p>
                 <hr size="5px" color="#242424">
                 <h5><b>{{ question.title.label }} №{{ loop.index }}:</b></h5>
-                {{ question.title(class="form-control") }}
+                {{ question.title(class="form-control", autocomplete="off") }}
                 {% for error in question.title.errors %}
                     <p class="alert alert-danger" role="alert">
                         {{ error }}
@@ -31,10 +31,10 @@
                 <p>
                     <div><b>
                         {{ question.answer_1.label }}
-                        Процент:
+                        <span style="padding-left: 59.5%;">Процент:</span>
                     </b></div>
                     <div class="input-group">
-                        {{ question.answer_1(class="form-control", style="width: 75%") }}
+                        {{ question.answer_1(class="form-control", style="width: 75%", autocomplete="off") }}
                         {{ question.choose_per_1(class="form-control", style="width: 25%") }}
                         {% for error in question.answer_1.errors %}
                             <p class="alert alert-danger" role="alert">
@@ -47,10 +47,10 @@
                 <p>
                     <div><b>
                         {{ question.answer_2.label }}
-                        Процент:
+                        <span style="padding-left: 59.5%;">Процент:</span>
                     </b></div>
                     <div class="input-group">
-                        {{ question.answer_2(class="form-control", style="width: 75%") }}
+                        {{ question.answer_2(class="form-control", style="width: 75%", autocomplete="off") }}
                         {{ question.choose_per_2(class="form-control", style="width: 25%") }}
                         {% for error in question.answer_2.errors %}
                             <p class="alert alert-danger" role="alert">
@@ -63,10 +63,10 @@
                 <p>
                     <div><b>
                         {{ question.answer_3.label }}
-                        Процент:
+                        <span style="padding-left: 59.5%;">Процент:</span>
                     </b></div>
                     <div class="input-group">
-                        {{ question.answer_3(class="form-control", style="width: 75%") }}
+                        {{ question.answer_3(class="form-control", style="width: 75%", autocomplete="off") }}
                         {{ question.choose_per_3(class="form-control", style="width: 25%") }}
                         {% for error in question.answer_3.errors %}
                             <p class="alert alert-danger" role="alert">
@@ -79,10 +79,10 @@
                 <p>
                     <div><b>
                         {{ question.answer_4.label }}
-                        Процент:
+                        <span style="padding-left: 59.5%;">Процент:</span>
                     </b></div>
                     <div class="input-group">
-                        {{ question.answer_4(class="form-control", style="width: 75%") }}
+                        {{ question.answer_4(class="form-control", style="width: 75%", autocomplete="off") }}
                         {{ question.choose_per_4(class="form-control", style="width: 25%") }}
                         {% for error in question.answer_4.errors %}
                             <p class="alert alert-danger" role="alert">
@@ -98,7 +98,7 @@
         <hr size="5px" color="#242424">
         <p>
             <b>{{ form.result_per_1.label }}</b><br>
-            {{ form.result_per_1(class="form-control") }}
+            {{ form.result_per_1(class="form-control", autocomplete="off") }}
             {% for error in form.result_per_1.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
@@ -107,7 +107,7 @@
         </p>
         <p>
             <b>{{ form.result_per_2.label }}</b><br>
-            {{ form.result_per_2(class="form-control") }}
+            {{ form.result_per_2(class="form-control", autocomplete="off") }}
             {% for error in form.result_per_2.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
@@ -116,7 +116,7 @@
         </p>
         <p>
             <b>{{ form.result_per_3.label }}</b><br>
-            {{ form.result_per_3(class="form-control") }}
+            {{ form.result_per_3(class="form-control", autocomplete="off") }}
             {% for error in form.result_per_3.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
@@ -125,7 +125,7 @@
         </p>
         <p>
             <b>{{ form.result_per_4.label }}</b><br>
-            {{ form.result_per_4(class="form-control") }}
+            {{ form.result_per_4(class="form-control", autocomplete="off") }}
             {% for error in form.result_per_4.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}

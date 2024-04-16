@@ -10,6 +10,7 @@ from data.user_model import User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+app.config['JSON_SORT_KEYS'] = False
 
 api = Api(app)
 
@@ -129,10 +130,16 @@ def make_test(test_type):
         form = TestPercentForm()
     if request.method == 'POST':
         # Добавляю в БД основную информацию о тесте и получаю id для дальнейшего использования
+        if test_type == 1:
+            test_title = f'Какой ты {form.test_title.data}?'
+        elif test_type == 2:
+            test_title = f'На сколько ты совместим с {form.test_title.data}?'
+        elif test_type == 3:
+            test_title = f'Насколько ты {form.test_title.data}?'
         test_id = post('http://127.0.0.1:8080/api/tests', json={
             'type': test_type,
             'creator': current_user.id,
-            'title': form.test_title.data,
+            'title': test_title,
             'description': form.test_description.data,
             'status': form.privacy.data
         }).json()['test']
