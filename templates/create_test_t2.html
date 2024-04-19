@@ -16,6 +16,16 @@
                 </p>
             {% endfor %}
         </p>
+        <p>
+            <hr size="5px" color="#242424">
+            <h5><b>{{ form.test_description.label }}</b></h5>
+            {{ form.test_description(class="form-control") }}
+            {% for error in form.test_description.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
         {% for question in form.questions %}
             <p>
                 <hr size="5px" color="#242424">

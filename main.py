@@ -118,7 +118,8 @@ def load_user(user_id):
 @app.route('/choose_type')
 @login_required
 def choose_type():
-    return render_template('tests_types.html', title='Выбор типа теста')
+    tests = get('http://127.0.0.1:8080/api/tests').json()['tests']
+    return render_template('tests_types.html', title='Выбор типа теста', tests=tests)
 
 
 @app.route('/choose_type/<int:test_type>', methods=['GET', 'POST'])
@@ -131,11 +132,11 @@ def make_test(test_type):
     if request.method == 'POST':
         # Добавляю в БД основную информацию о тесте и получаю id для дальнейшего использования
         if test_type == 1:
-            test_title = f'Какой ты {form.test_title.data}?'
+            test_title = f'Какой вы {form.test_title.data}?'
         elif test_type == 2:
             test_title = f'На сколько ты совместим с {form.test_title.data}?'
         elif test_type == 3:
-            test_title = f'Насколько ты {form.test_title.data}?'
+            test_title = f'Насколько вы {form.test_title.data}?'
         test_id = post('http://127.0.0.1:8080/api/tests', json={
             'type': test_type,
             'creator': current_user.id,

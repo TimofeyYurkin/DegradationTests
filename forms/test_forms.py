@@ -6,17 +6,17 @@ from wtforms.validators import DataRequired, Length
 # Мини-формы вопроса для создания тестов
 class QuestionCreateForm(FlaskForm):
     title = StringField('Заголовок вопроса', validators=[DataRequired(), Length(min=10, max=50)])
-    answer_1 = StringField('Ответ №1:', validators=[DataRequired(), Length(min=3, max=30)])
-    answer_2 = StringField('Ответ №2:', validators=[DataRequired(), Length(min=3, max=30)])
-    answer_3 = StringField('Ответ №3:', validators=[DataRequired(), Length(min=3, max=30)])
-    answer_4 = StringField('Ответ №4:', validators=[DataRequired(), Length(min=3, max=30)])
+    answer_1 = StringField('Ответ №1:', validators=[DataRequired(), Length(min=3, max=35)])
+    answer_2 = StringField('Ответ №2:', validators=[DataRequired(), Length(min=3, max=35)])
+    answer_3 = StringField('Ответ №3:', validators=[DataRequired(), Length(min=3, max=35)])
+    answer_4 = StringField('Ответ №4:', validators=[DataRequired(), Length(min=3, max=35)])
 
 
 class QuestionPercent(QuestionCreateForm):
-    choose_per_1 = SelectField(choices=[('1', 0), ('2', 4), ('3', 7), ('4', 10)], validators=[DataRequired()])
-    choose_per_2 = SelectField(choices=[('1', 0), ('2', 4), ('3', 7), ('4', 10)], validators=[DataRequired()])
-    choose_per_3 = SelectField(choices=[('1', 0), ('2', 4), ('3', 7), ('4', 10)], validators=[DataRequired()])
-    choose_per_4 = SelectField(choices=[('1', 0), ('2', 4), ('3', 7), ('4', 10)], validators=[DataRequired()])
+    choose_per_1 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired()])
+    choose_per_2 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired()])
+    choose_per_3 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired()])
+    choose_per_4 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired()])
 
 
 class QuestionNumbers(QuestionCreateForm):
@@ -40,7 +40,7 @@ class TestCreateForm(FlaskForm):
 
 
 class TestPercentForm(TestCreateForm):
-    questions = FieldList(FormField(QuestionPercent), min_entries=10, max_entries=10)
+    questions = FieldList(FormField(QuestionPercent), min_entries=5, max_entries=5)
     result_per_1 = StringField('Комментарий к 0% - 25%:', validators=[DataRequired(), Length(min=10, max=50)])
     result_per_2 = StringField('Комментарий к 30% - 50%:', validators=[DataRequired(), Length(min=10, max=50)])
     result_per_3 = StringField('Комментарий к 55% - 75%:', validators=[DataRequired(), Length(min=10, max=50)])
@@ -48,7 +48,7 @@ class TestPercentForm(TestCreateForm):
 
 
 class TestNumbersForm(TestCreateForm):
-    questions = FieldList(FormField(QuestionNumbers), min_entries=10, max_entries=10)
+    questions = FieldList(FormField(QuestionNumbers), min_entries=5, max_entries=5)
     result_num_1 = StringField('Комментарий к варианту №1:', validators=[DataRequired(), Length(min=10, max=50)])
     result_num_2 = StringField('Комментарий к варианту №2:', validators=[DataRequired(), Length(min=10, max=50)])
     result_num_3 = StringField('Комментарий к варианту №3:', validators=[DataRequired(), Length(min=10, max=50)])
