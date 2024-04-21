@@ -8,6 +8,7 @@ class Answer(SqlAlchemyBase, SerializerMixin):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     question_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('questions.id'), nullable=False)
+    position = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     text = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     result = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
 

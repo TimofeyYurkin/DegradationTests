@@ -38,7 +38,7 @@ class TestListResource(Resource):
     def get(self):
         session = db_session.create_session()
         tests = session.query(Test).all()
-        return jsonify({'tests': item.to_dict(only=('id', 'type', 'creator', 'title', 'description', 'status'))
+        return jsonify({'tests': item.to_dict(only=('id', 'type', 'creator', 'title', 'description', 'status', 'user'))
                         for item in tests})
 
     def post(self):

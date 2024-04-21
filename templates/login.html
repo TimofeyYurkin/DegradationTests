@@ -4,6 +4,7 @@
     <form action="" method="post" class="user_form">
         {{ form.hidden_tag() }}
         <h2>Авторизация</h2>
+        <hr size="5px" color="#242424">
         <p>
             {{ form.email.label }}<br>
             {{ form.email(class="form-control", type="email", autocomplete="off") }}<br>

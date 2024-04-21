@@ -5,6 +5,7 @@ from .answer_model import Answer
 
 parser = reqparse.RequestParser()
 parser.add_argument('question_id', required=True, type=int)
+parser.add_argument('position', required=True, type=int)
 parser.add_argument('text', required=True, type=str)
 parser.add_argument('result', required=True, type=int)
 
@@ -21,7 +22,7 @@ class AnswerResource(Resource):
         abort_if_answer_not_found(answer_id)
         session = db_session.create_session()
         answer = session.query(Answer).get(answer_id)
-        return jsonify({'answer': answer.to_dict(only=('question_id', 'text', 'result'))})
+        return jsonify({'answer': answer.to_dict(only=('question_id', 'position', 'text', 'result'))})
 
     def delete(self, answer_id):
         abort_if_answer_not_found(answer_id)
@@ -36,13 +37,14 @@ class AnswerListResource(Resource):
     def get(self):
         session = db_session.create_session()
         answers = session.query(Answer).all()
-        return jsonify({'answers': item.to_dict(only=('id', 'question_id', 'text', 'result')) for item in answers})
+        return jsonify({'answers': item.to_dict(only=('id', 'question_id', 'position', 'text', 'result')) for item in answers})
 
     def post(self):
         args = parser.parse_args()
         session = db_session.create_session()
         answer = Answer(
             question_id=args['question_id'],
+            position=args['position'],
             text=args['text'],
             result=args['result']
         )

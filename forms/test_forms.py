@@ -5,11 +5,11 @@ from wtforms.validators import DataRequired, Length
 
 # Мини-формы вопроса для создания тестов
 class QuestionCreateForm(FlaskForm):
-    title = StringField('Заголовок вопроса', validators=[DataRequired(), Length(min=10, max=50)])
-    answer_1 = StringField('Ответ №1:', validators=[DataRequired(), Length(min=3, max=35)])
-    answer_2 = StringField('Ответ №2:', validators=[DataRequired(), Length(min=3, max=35)])
-    answer_3 = StringField('Ответ №3:', validators=[DataRequired(), Length(min=3, max=35)])
-    answer_4 = StringField('Ответ №4:', validators=[DataRequired(), Length(min=3, max=35)])
+    title = StringField('Заголовок вопроса', validators=[DataRequired(), Length(min=10, max=60)])
+    answer_1 = StringField('Ответ №1:', validators=[DataRequired(), Length(min=3, max=40)])
+    answer_2 = StringField('Ответ №2:', validators=[DataRequired(), Length(min=3, max=40)])
+    answer_3 = StringField('Ответ №3:', validators=[DataRequired(), Length(min=3, max=40)])
+    answer_4 = StringField('Ответ №4:', validators=[DataRequired(), Length(min=3, max=40)])
 
 
 class QuestionPercent(QuestionCreateForm):
@@ -34,9 +34,9 @@ class QuestionAnswerForm(FlaskForm):
 # Формы теста для их создания
 class TestCreateForm(FlaskForm):
     test_title = StringField(validators=[DataRequired(), Length(min=3, max=30)])
-    test_description = TextAreaField('Описание теста:', validators=[DataRequired(), Length(min=20, max=150)])
+    test_description = TextAreaField('Описание теста:', validators=[DataRequired(), Length(min=30, max=150)])
     privacy = BooleanField('Отображать для других пользователей')
-    submit = SubmitField('Создать')
+    submit = SubmitField('Опубликовать')
 
 
 class TestPercentForm(TestCreateForm):

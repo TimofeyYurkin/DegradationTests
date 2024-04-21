@@ -3,7 +3,11 @@
 {% block content %}
     <form action="" method="post" class="test_form">
         {{ form.hidden_tag() }}
-        <a class="btn btn-secondary" style="width: 20%; height: 35px;" href="/choose_type">Назад</a>
+        {% if not editing %}
+            <a class="btn btn-secondary" style="width: 20%; height: 35px;" href="/choose_type">Назад</a>
+        {% else %}
+            <a class="btn btn-secondary" style="width: 20%; height: 35px;" href="/">Назад</a>
+        {% endif %}
         <hr size="5px" color="#242424">
         <h2>Тест: проверка схожести</h2>
         <p>
@@ -104,7 +108,7 @@
             </p>
         {% endfor %}
         <hr size="5px" color="#242424">
-        <h5><b>Результаты</b></h5>
+        <h5><b>Результаты ("Вы кто-то на n %! ...")</b></h5>
         <hr size="5px" color="#242424">
         <p>
             <b>{{ form.result_per_1.label }}</b><br>
@@ -143,7 +147,12 @@
             {% endfor %}
         </p>
         <p>{{ form.privacy() }} <b>{{ form.privacy.label }}</b></p>
-        <p>{{ form.submit(type="submit", class="btn btn-primary", style="width: 20%; height: 35px;") }}</p>
+        <p>
+            {{ form.submit(type="submit", class="btn btn-primary", style="height: 35px;") }}
+            {% if editing %}
+                <a class="btn btn-danger" href="/test_delete/{{ test_id }}">Удалить</a>
+            {% endif %}
+        </p>
         <div>{{ message }}</div>
     </form>
 {% endblock %}
