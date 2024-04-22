@@ -8,7 +8,7 @@ from data.question_model import Question
 from data.answer_model import Answer
 from data.results_model import Results
 from forms.user_forms import RegisterForm, LoginForm, DeleteForm
-from forms.test_forms import TestPercentForm, TestNumbersForm
+from forms.test_forms import TestPercentForm, TestNumbersForm, TestPassingForm
 from data.user_model import User
 
 
@@ -378,6 +378,68 @@ def delete_test(test_id):
     else:
         abort(404)
     return redirect('/')
+
+
+@app.route('/test_solve/<int:test_id>', methods=['GET', 'POST'])
+@login_required
+def solve_test(test_id):
+    form = TestPassingForm()
+    session = db_session.create_session()
+    test = session.query(Test).filter(Test.id == test_id).first()
+    if request.method == 'GET':
+        if test:
+            questions = session.query(Question).filter(Question.test_id == test.id).all()
+            for question, variant in zip(questions, form.variants):
+                answers = session.query(Answer).filter(Answer.question_id == question.id).all()
+                variant.answer_variants.label = question.text
+                variant.answer_variants.choices = [(str(answer.result), answer.text) for answer in answers]
+        else:
+            abort(404)
+    if request.method == 'POST':
+        session = db_session.create_session()
+        test = session.query(Test).filter(Test.id == test_id).first()
+        if test:
+            count_result = []
+            result = [0, 0]
+            for variant in form.variants:
+                count_result.append(int(variant.answer_variants.data))
+            if test.type == 1:
+                for i in count_result:
+                    if count_result.count(i) > result[1]:
+                        result = [i , count_result.count(i)]
+                result = result[0]
+            if test.type == 2 or test.type == 3:
+                result = sum(count_result)
+            return redirect(f'/test_result/{test.id}/{result}')
+        else:
+            abort(404)
+    return render_template('solve_test.html', title='DegradationTests', form=form, test=test)
+
+
+@app.route('/test_result/<int:test_id>/<int:result>')
+@login_required
+def result_test(test_id, result):
+    session = db_session.create_session()
+    test = session.query(Test).filter(Test.id == test_id).first()
+    if test:
+        results = session.query(Results).filter(Results.id == test_id).first()
+        if test.type == 1:
+            result_message = 'Поздравляем! Вы '
+        elif test.type == 2:
+            result_message = f"Вы совместимы с {test.title[26:].replace('?', '')} на {result}%! "
+        elif test.type == 3:
+            result_message = f"Вы {test.title[13:].replace('?', '')} на {result}%! "
+        if result == 1 or 0 <= result <= 25:
+            result_message += results.comment_1
+        elif result == 2 or 0 <= result <= 25:
+            result_message += results.comment_2
+        elif result == 3 or 51 <= result <= 75:
+            result_message += results.comment_3
+        elif result == 4 or 76 <= result <= 100:
+            result_message += results.comment_4
+    else:
+        abort(404)
+    return render_template('result_test.html', title='DegradationTests', result_message=result_message, test_id=test_id)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="result_form">
+        <h2 style="text-align: center;">Результаты прохождения</h2>
+        <hr size="5px" color="#242424">
+        <h3 style="text-align: center;">{{ result_message }}</h3>
+        <div class="btn-group" role="group" style="width: 100%;">
+            <a href="/test_solve/{{ test_id }}" class="btn btn-primary" style="">Перепройти тест</a>
+            <a href="/" class="btn btn-secondary">Вернуться к списку</a>
+        </div>
+    </div>
+{% endblock %}

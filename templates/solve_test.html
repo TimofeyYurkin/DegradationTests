@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="post" class="test_form">
+        {{ form.hidden_tag() }}
+        <a class="btn btn-secondary" style="width: 20%; height: 35px;" href="/">Назад</a>
+        <hr size="5px" color="#242424">
+        <h2>{{ test.title }}</h2>
+        {% for question in form.variants %}
+            <p>
+                <hr size="5px" color="#242424">
+                <h5><b>{{ question.answer_variants.label }}</b></h5>
+                <hr size="5px" color="#242424">
+                {{ question.answer_variants(class="form-check", style="font-size: large;") }}
+                {% for error in question.answer_variants.errors %}
+                    <p class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </p>
+        {% endfor %}
+        <hr size="5px" color="#242424">
+        <p>
+            {{ form.submit(type="submit", class="btn btn-primary", style="height: 35px;") }}
+        </p>
+    </form>
+{% endblock %}

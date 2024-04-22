@@ -6,22 +6,24 @@
             <h2 style="margin-bottom: 2.5%;">Проходите и создавайте тесты!</h2>
             <a href="/choose_type" class="btn btn-secondary">Создать тест</a>
             {% for test in tests %}
-                <div class="card" style="background-color: #f0f0f0; margin-top: 2.5%; margin-bottom: 2.5%;">
-                    <div class="card-body">
-                        <h3 class="card-title">{{ test.title }}</h3>
-                        <hr size="5px" color="#242424">
-                        <p class="card-text" style="text-align: justify; font-size: large;">
-                            {{ test.description }}
-                            <br>
-                            <em>Автор: {{ test.user.name }}</em>
-                        </p>
-                        <hr size="5px" color="#242424">
-                        <a href="/test_solve/{{ test.id }}" class="btn btn-primary">Пройти тест</a>
-                        {% if current_user.is_authenticated and (current_user.id == test.creator or current_user.id == 1) %}
-                            <a href="/test_edit/{{ test.id }}" class="btn btn-secondary">Изменить тест</a>
-                        {% endif %}
+                {% if test.status or (current_user.is_authenticated and (current_user.id == test.creator or current_user.id)) == 1 %}
+                    <div class="card" style="background-color: #f0f0f0; margin-top: 2.5%; margin-bottom: 2.5%;">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ test.title }}</h3>
+                            <hr size="5px" color="#242424">
+                            <p class="card-text" style="text-align: justify; font-size: large;">
+                                {{ test.description }}
+                                <br>
+                                <em>Автор: {{ test.user.name }}</em>
+                            </p>
+                            <hr size="5px" color="#242424">
+                            <a href="/test_solve/{{ test.id }}" class="btn btn-primary">Пройти тест</a>
+                            {% if current_user.is_authenticated and (current_user.id == test.creator or current_user.id == 1) %}
+                                <a href="/test_edit/{{ test.id }}" class="btn btn-secondary">Изменить тест</a>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             {% endfor %}
         {% else %}
             <h2>Зайдите в аккаунт или зарегистрируйтесь, чтобы начать работу.</h2>

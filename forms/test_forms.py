@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, BooleanField, FieldList, FormField, SelectField
+from wtforms import StringField, TextAreaField, SubmitField, BooleanField, FieldList, FormField, SelectField, RadioField
 from wtforms.validators import DataRequired, Length
 
 
@@ -28,7 +28,7 @@ class QuestionNumbers(QuestionCreateForm):
 
 # Мини-форма вопроса для прохождения тестов
 class QuestionAnswerForm(FlaskForm):
-    pass
+    answer_variants = RadioField('', choices=[('', ''), ('', ''), ('', ''), ('', '')], validators=[DataRequired()])
 
 
 # Формы теста для их создания
@@ -42,9 +42,9 @@ class TestCreateForm(FlaskForm):
 class TestPercentForm(TestCreateForm):
     questions = FieldList(FormField(QuestionPercent), min_entries=5, max_entries=5)
     result_per_1 = StringField('Комментарий к 0% - 25%:', validators=[DataRequired(), Length(min=10, max=50)])
-    result_per_2 = StringField('Комментарий к 30% - 50%:', validators=[DataRequired(), Length(min=10, max=50)])
-    result_per_3 = StringField('Комментарий к 55% - 75%:', validators=[DataRequired(), Length(min=10, max=50)])
-    result_per_4 = StringField('Комментарий к 80% - 100%:', validators=[DataRequired(), Length(min=10, max=50)])
+    result_per_2 = StringField('Комментарий к 26% - 50%:', validators=[DataRequired(), Length(min=10, max=50)])
+    result_per_3 = StringField('Комментарий к 51% - 75%:', validators=[DataRequired(), Length(min=10, max=50)])
+    result_per_4 = StringField('Комментарий к 76% - 100%:', validators=[DataRequired(), Length(min=10, max=50)])
 
 
 class TestNumbersForm(TestCreateForm):
@@ -56,5 +56,6 @@ class TestNumbersForm(TestCreateForm):
 
 
 # Форма теста для прохождения
-class PassingForm(FlaskForm):
-    pass
+class TestPassingForm(FlaskForm):
+    variants = FieldList(FormField(QuestionAnswerForm), min_entries=5, max_entries=5)
+    submit = SubmitField('Завершить')
