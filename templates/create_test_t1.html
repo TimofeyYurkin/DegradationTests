@@ -148,7 +148,7 @@
         </p>
         <p>{{ form.privacy() }} <b>{{ form.privacy.label }}</b></p>
         <p>
-            {{ form.submit(type="submit", class="btn btn-primary", style="height: 35px;") }}
+            {{ form.submit(type="submit", class="btn btn-primary") }}
             {% if editing %}
                 <a class="btn btn-danger" href="/test_delete/{{ test_id }}">Удалить</a>
             {% endif %}

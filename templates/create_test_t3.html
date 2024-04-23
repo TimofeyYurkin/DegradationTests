@@ -12,7 +12,7 @@
         <h2>Тест: проверка схожести</h2>
         <p>
             <hr size="5px" color="#242424">
-            <h5><b>Дополните: "Насколько вы ... "</b></h5>
+            <h5><b>Дополните: "Насколько вы ... ?"</b></h5>
             {{ form.test_title(class="form-control", autocomplete="off") }}
             {% for error in form.test_title.errors %}
                 <p class="alert alert-danger" role="alert">
@@ -148,7 +148,7 @@
         </p>
         <p>{{ form.privacy() }} <b>{{ form.privacy.label }}</b></p>
         <p>
-            {{ form.submit(type="submit", class="btn btn-primary", style="height: 35px;") }}
+            {{ form.submit(type="submit", class="btn btn-primary") }}
             {% if editing %}
                 <a class="btn btn-danger" href="/test_delete/{{ test_id }}">Удалить</a>
             {% endif %}

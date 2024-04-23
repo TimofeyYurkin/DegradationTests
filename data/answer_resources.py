@@ -37,7 +37,8 @@ class AnswerListResource(Resource):
     def get(self):
         session = db_session.create_session()
         answers = session.query(Answer).all()
-        return jsonify({'answers': item.to_dict(only=('id', 'question_id', 'position', 'text', 'result')) for item in answers})
+        return jsonify({'answers': item.to_dict(only=('id', 'question_id', 'position', 'text', 'result')) for item in
+                        answers})
 
     def post(self):
         args = parser.parse_args()

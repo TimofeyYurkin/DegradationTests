@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, request, abort
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_restful import Api
-from requests import get, post, delete
 from data import db_session, user_resources, test_resources, question_resources, answer_resources, results_resources
 from data.test_model import Test
 from data.question_model import Question
@@ -61,20 +60,19 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         session = db_session.create_session()
-
         # Проверка необходимых условий для создания пользователя
         if form.password.data != form.password_again.data:
             return render_template('register.html', title='DegradationTests', form=form, message="Пароли не совпадают")
         if session.query(User).filter(User.email == form.email.data).first():
-            return render_template('register.html', title='DegradationTests', form=form, message="Такая почта уже занята")
-
+            return render_template('register.html', title='DegradationTests', form=form, message="Эта почта уже занята")
         # Добавления пользователя в базу данных
-        user_id = post('http://127.0.0.1:8080/api/users', json={
-            'name': form.name.data,
-            'email': form.email.data,
-            'password': form.password.data
-        }).json()['id']
-        user = session.query(User).get(user_id)
+        user = User(
+            name=form.name.data,
+            email=form.email.data
+        )
+        user.set_password(form.password.data)
+        session.add(user)
+        session.commit()
         login_user(user, remember=True)
         return redirect('/')
     return render_template('register.html', title='DegradationTests', form=form)
@@ -90,7 +88,7 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect('/')
-        return render_template('login.html', title='DegradationTests', form=form, message='Неправильная почта или пароль')
+        return render_template('login.html', title='DegradationTests', form=form, message='Неправильная почта/пароль')
     return render_template('login.html', title='DegradationTests', form=form)
 
 
@@ -150,63 +148,68 @@ def make_test(test_type):
         form = TestPercentForm()
     if request.method == 'POST':
         # Добавляю в БД основную информацию о тесте и получаю id для дальнейшего использования
+        session = db_session.create_session()
         if test_type == 1:
             test_title = f'Какой вы {form.test_title.data}?'
         elif test_type == 2:
             test_title = f'На сколько ты совместим с {form.test_title.data}?'
         elif test_type == 3:
             test_title = f'Насколько вы {form.test_title.data}?'
-        test_id = post('http://127.0.0.1:8080/api/tests', json={
-            'type': test_type,
-            'creator': current_user.id,
-            'title': test_title,
-            'description': form.test_description.data,
-            'status': form.privacy.data
-        }).json()['test']
-
+        test = Test(
+            type=test_type,
+            creator=current_user.id,
+            title=test_title,
+            description=form.test_description.data,
+            status=form.privacy.data
+        )
+        session.add(test)
+        session.commit()
         # Пробегаюсь по всем вопросам и ответам для них и добавляю в БД
-        for position, question in enumerate(form.questions, start=1):
-            question_id = post('http://127.0.0.1:8080/api/questions', json={
-                'test_id': test_id,
-                'position': position,
-                'text': question.title.data
-            }).json()['question']
+        for position, f_question in enumerate(form.questions, start=1):
+            question = Question(
+                test_id=test.id,
+                position=position,
+                text=f_question.title.data
+            )
+            session.add(question)
+            session.commit()
 
-            post('http://127.0.0.1:8080/api/answers', json={
-                'question_id': question_id,
-                'position': 1,
-                'text': question.answer_1.data,
-                'result': question.choose_num_1.data if test_type == 1 else question.choose_per_1.data
-            })
+            session.add(Answer(
+                question_id=question.id,
+                position=1,
+                text=f_question.answer_1.data,
+                result=f_question.choose_num_1.data if test_type == 1 else f_question.choose_per_1.data
+            ))
 
-            post('http://127.0.0.1:8080/api/answers', json={
-                'question_id': question_id,
-                'position': 2,
-                'text': question.answer_2.data,
-                'result': question.choose_num_2.data if test_type == 1 else question.choose_per_2.data
-            })
+            session.add(Answer(
+                question_id=question.id,
+                position=2,
+                text=f_question.answer_2.data,
+                result=f_question.choose_num_2.data if test_type == 1 else f_question.choose_per_2.data
+            ))
 
-            post('http://127.0.0.1:8080/api/answers', json={
-                'question_id': question_id,
-                'position': 3,
-                'text': question.answer_3.data,
-                'result': question.choose_num_3.data if test_type == 1 else question.choose_per_3.data
-            })
+            session.add(Answer(
+                question_id=question.id,
+                position=3,
+                text=f_question.answer_3.data,
+                result=f_question.choose_num_3.data if test_type == 1 else f_question.choose_per_3.data
+            ))
 
-            post('http://127.0.0.1:8080/api/answers', json={
-                'question_id': question_id,
-                'position': 4,
-                'text': question.answer_4.data,
-                'result': question.choose_num_4.data if test_type == 1 else question.choose_per_4.data
-            })
+            session.add(Answer(
+                question_id=question.id,
+                position=4,
+                text=f_question.answer_4.data,
+                result=f_question.choose_num_4.data if test_type == 1 else f_question.choose_per_4.data
+            ))
 
         # Добавляю в БД результаты
-        post('http://127.0.0.1:8080/api/results', json={
-            'comment_1': form.result_num_1.data if test_type == 1 else form.result_per_1.data,
-            'comment_2': form.result_num_2.data if test_type == 1 else form.result_per_2.data,
-            'comment_3': form.result_num_3.data if test_type == 1 else form.result_per_3.data,
-            'comment_4': form.result_num_4.data if test_type == 1 else form.result_per_4.data,
-        })
+        session.add(Results(
+            comment_1=form.result_num_1.data if test_type == 1 else form.result_per_1.data,
+            comment_2=form.result_num_2.data if test_type == 1 else form.result_per_2.data,
+            comment_3=form.result_num_3.data if test_type == 1 else form.result_per_3.data,
+            comment_4=form.result_num_4.data if test_type == 1 else form.result_per_4.data
+        ))
+        session.commit()
         return redirect('/')
     if test_type == 1:
         return render_template('create_test_t1.html', title='DegradationTests', form=form)
@@ -396,8 +399,6 @@ def solve_test(test_id):
         else:
             abort(404)
     if request.method == 'POST':
-        session = db_session.create_session()
-        test = session.query(Test).filter(Test.id == test_id).first()
         if test:
             count_result = []
             result = [0, 0]
@@ -406,7 +407,7 @@ def solve_test(test_id):
             if test.type == 1:
                 for i in count_result:
                     if count_result.count(i) > result[1]:
-                        result = [i , count_result.count(i)]
+                        result = [i, count_result.count(i)]
                 result = result[0]
             if test.type == 2 or test.type == 3:
                 result = sum(count_result)

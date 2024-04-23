@@ -13,12 +13,13 @@
         <nav class="navbar navbar-expand-lg" style="background-color: #f0f0f0;">
             <div class="container-fluid">
                 <h1 style="margin-left: 1.5%;">
-                    <img src="static/images/dt_icon.png" class="d-inline-block align-text-top" width="64" height="64">
+                    <img src="{{ url_for('static', filename='images/dt_icon.png') }}"
+                         class="d-inline-block align-text-top" width="64" height="64">
                     DegradationTests
                 </h1>
                 {% if current_user.is_authenticated %}
                     <div class="collapse navbar-collapse">
-                        <div class="navbar-nav" style="margin-left: 65%; font-size: large;">
+                        <div class="navbar-nav" style="margin-left: 60%; font-size: large;">
                             <a class="nav-link active"><b>{{ current_user.name }}</b></a>
                             <a class="nav-link" href="/logout">Выйти</a>
                             <a class="nav-link" href="/delete_user">Удалить аккаунт</a>
@@ -27,10 +28,9 @@
                     </div>
                 {% else %}
                     <div class="collapse navbar-collapse">
-                        <div class="navbar-nav" style="margin-left: 65%; font-size: large;">
+                        <div class="navbar-nav" style="margin-left: 60%; font-size: large;">
                             <a class="nav-link" href="/register">Зарегистрироваться</a>
                             <a class="nav-link" href="/login">Войти</a>
-                            <a class="nav-link" href="/">На главную</a>
                         </div>
                     </div>
                 {% endif %}
