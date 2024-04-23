@@ -5,18 +5,18 @@ from wtforms.validators import DataRequired, Length
 
 # Мини-формы вопроса для создания тестов
 class QuestionCreateForm(FlaskForm):
-    title = StringField('Заголовок вопроса', validators=[DataRequired("QuestionCreateForm error"), Length(min=10, max=60)])
-    answer_1 = StringField('Ответ №1:', validators=[DataRequired("QuestionCreateForm error"), Length(min=3, max=40)])
-    answer_2 = StringField('Ответ №2:', validators=[DataRequired("QuestionCreateForm error"), Length(min=3, max=40)])
-    answer_3 = StringField('Ответ №3:', validators=[DataRequired("QuestionCreateForm error"), Length(min=3, max=40)])
-    answer_4 = StringField('Ответ №4:', validators=[DataRequired("QuestionCreateForm error"), Length(min=3, max=40)])
+    title = StringField('Заголовок вопроса', validators=[DataRequired(), Length(min=10, max=60)])
+    answer_1 = StringField('Ответ №1:', validators=[DataRequired(), Length(min=3, max=40)])
+    answer_2 = StringField('Ответ №2:', validators=[DataRequired(), Length(min=3, max=40)])
+    answer_3 = StringField('Ответ №3:', validators=[DataRequired(), Length(min=3, max=40)])
+    answer_4 = StringField('Ответ №4:', validators=[DataRequired(), Length(min=3, max=40)])
 
 
 class QuestionPercent(QuestionCreateForm):
-    choose_per_1 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired("QuestionPercent error")])
-    choose_per_2 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired("QuestionPercent error")])
-    choose_per_3 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired("QuestionPercent error")])
-    choose_per_4 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired("QuestionPercent error")])
+    choose_per_1 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired()])
+    choose_per_2 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired()])
+    choose_per_3 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired()])
+    choose_per_4 = SelectField(choices=[('0', 0), ('7', 7), ('14', 14), ('20', 20)], validators=[DataRequired()])
 
 
 class QuestionNumbers(QuestionCreateForm):
