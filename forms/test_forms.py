@@ -28,7 +28,7 @@ class QuestionNumbers(QuestionCreateForm):
 
 # Мини-форма вопроса для прохождения тестов
 class QuestionAnswerForm(FlaskForm):
-    answer_variants = RadioField('', choices=[('', ''), ('', ''), ('', ''), ('', '')], validators=[])
+    answer_variants = RadioField('', choices=[('', ''), ('', ''), ('', ''), ('', '')], validators=[DataRequired()])
 
 
 # Формы теста для их создания
