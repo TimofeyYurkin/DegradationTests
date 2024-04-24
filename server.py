@@ -165,10 +165,9 @@ def make_test(test_type):
         session.add(test)
         session.commit()
         # Пробегаюсь по всем вопросам и ответам для них и добавляю в БД
-        for position, f_question in enumerate(form.questions, start=1):
+        for f_question in form.questions:
             question = Question(
                 test_id=test.id,
-                position=position,
                 text=f_question.title.data
             )
             session.add(question)
@@ -430,9 +429,9 @@ def result_test(test_id, result):
             result_message = f"Вы совместимы с {test.title[26:].replace('?', '')} на {result}%! "
         elif test.type == 3:
             result_message = f"Вы {test.title[13:].replace('?', '')} на {result}%! "
-        if result == 1 or 0 <= result <= 25:
+        if (result == 1 and test.type == 1) or (0 <= result <= 25 and test.type != 1):
             result_message += results.comment_1
-        elif result == 2 or 0 <= result <= 25:
+        elif result == 2 or 26 <= result <= 50:
             result_message += results.comment_2
         elif result == 3 or 51 <= result <= 75:
             result_message += results.comment_3

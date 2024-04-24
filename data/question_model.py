@@ -8,7 +8,6 @@ class Question(SqlAlchemyBase, SerializerMixin):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     test_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('tests.id'), nullable=False)
-    position = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     text = sqlalchemy.Column(sqlalchemy.String, nullable=False)
 
     test = sqlalchemy.orm.relationship('Test')

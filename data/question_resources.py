@@ -5,7 +5,6 @@ from .question_model import Question
 
 parser = reqparse.RequestParser()
 parser.add_argument('test_id', required=True, type=int)
-parser.add_argument('position', required=True, type=int)
 parser.add_argument('text', required=True, type=str)
 
 
@@ -21,7 +20,7 @@ class QuestionResource(Resource):
         abort_if_question_not_found(question_id)
         session = db_session.create_session()
         question = session.query(Question).get(question_id)
-        return jsonify({'question': question.to_dict(only=('test_id', 'position', 'text'))})
+        return jsonify({'question': question.to_dict(only=('test_id', 'text'))})
 
     def delete(self, question_id):
         abort_if_question_not_found(question_id)
@@ -36,14 +35,13 @@ class QuestionListResource(Resource):
     def get(self):
         session = db_session.create_session()
         questions = session.query(Question).all()
-        return jsonify({'questions': item.to_dict(only=('id', 'test_id', 'position', 'text')) for item in questions})
+        return jsonify({'questions': item.to_dict(only=('id', 'test_id', 'text')) for item in questions})
 
     def post(self):
         args = parser.parse_args()
         session = db_session.create_session()
         question = Question(
             test_id=args['test_id'],
-            position=args['position'],
             text=args['text']
         )
         session.add(question)
