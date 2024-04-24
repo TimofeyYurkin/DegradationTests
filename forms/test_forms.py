@@ -5,12 +5,11 @@ from wtforms.validators import DataRequired, Length
 
 # Мини-формы вопроса для создания тестов
 class QuestionCreateForm(FlaskForm):
-    title = StringField('Заголовок вопроса', validators=[DataRequired('Заполните пункт заголовка'),
-                                                         Length(min=10, max=60)])
-    answer_1 = StringField('Ответ №1:', validators=[DataRequired('Заполните пункт ответа №1'), Length(min=3, max=40)])
-    answer_2 = StringField('Ответ №2:', validators=[DataRequired('Заполните пункт ответа №1'), Length(min=3, max=40)])
-    answer_3 = StringField('Ответ №3:', validators=[DataRequired('Заполните пункт ответа №1'), Length(min=3, max=40)])
-    answer_4 = StringField('Ответ №4:', validators=[DataRequired('Заполните пункт ответа №1'), Length(min=3, max=40)])
+    title = StringField('Заголовок вопроса', validators=[DataRequired(), Length(min=10, max=60)])
+    answer_1 = StringField('Ответ №1:', validators=[DataRequired(), Length(min=3, max=40)])
+    answer_2 = StringField('Ответ №2:', validators=[DataRequired(), Length(min=3, max=40)])
+    answer_3 = StringField('Ответ №3:', validators=[DataRequired(), Length(min=3, max=40)])
+    answer_4 = StringField('Ответ №4:', validators=[DataRequired(), Length(min=3, max=40)])
 
 
 class QuestionPercent(QuestionCreateForm):
@@ -29,41 +28,31 @@ class QuestionNumbers(QuestionCreateForm):
 
 # Мини-форма вопроса для прохождения тестов
 class QuestionAnswerForm(FlaskForm):
-    answer_variants = RadioField('', choices=[('', ''), ('', ''), ('', ''), ('', '')],
-                                 validators=[DataRequired('Выберите один из вариантов ответа')])
+    answer_variants = RadioField('', choices=[('', ''), ('', ''), ('', ''), ('', '')], validators=[DataRequired()])
 
 
 # Формы теста для их создания
 class TestCreateForm(FlaskForm):
-    test_title = StringField(validators=[DataRequired('Заполните пункт названия теста'), Length(min=3, max=30)])
-    test_description = TextAreaField('Описание теста:', validators=[DataRequired('Заполните пункт описания теста'),
-                                                                    Length(min=30, max=150)])
+    test_title = StringField(validators=[DataRequired(), Length(min=3, max=30)])
+    test_description = TextAreaField('Описание теста:', validators=[DataRequired(), Length(min=30, max=150)])
     privacy = BooleanField('Отображать для других пользователей')
     submit = SubmitField('Опубликовать')
 
 
 class TestPercentForm(TestCreateForm):
     questions = FieldList(FormField(QuestionPercent), min_entries=5, max_entries=5)
-    result_per_1 = StringField('Комментарий к 0% - 25%:', validators=[DataRequired('Заполните пункт комментария №1'),
-                                                                      Length(min=10, max=50)])
-    result_per_2 = StringField('Комментарий к 26% - 50%:', validators=[DataRequired('Заполните пункт комментария №2'),
-                                                                       Length(min=10, max=50)])
-    result_per_3 = StringField('Комментарий к 51% - 75%:', validators=[DataRequired('Заполните пункт комментария №3'),
-                                                                       Length(min=10, max=50)])
-    result_per_4 = StringField('Комментарий к 76% - 100%:', validators=[DataRequired('Заполните пункт комментария №4'),
-                                                                        Length(min=10, max=50)])
+    result_per_1 = StringField('Комментарий к 0% - 25%:', validators=[DataRequired(), Length(min=10, max=50)])
+    result_per_2 = StringField('Комментарий к 26% - 50%:', validators=[DataRequired(), Length(min=10, max=50)])
+    result_per_3 = StringField('Комментарий к 51% - 75%:', validators=[DataRequired(), Length(min=10, max=50)])
+    result_per_4 = StringField('Комментарий к 76% - 100%:', validators=[DataRequired(), Length(min=10, max=50)])
 
 
 class TestNumbersForm(TestCreateForm):
     questions = FieldList(FormField(QuestionNumbers), min_entries=5, max_entries=5)
-    result_num_1 = StringField('Комментарий к варианту №1:', validators=[DataRequired('Заполните пункт комментария №1'),
-                                                                         Length(min=10, max=50)])
-    result_num_2 = StringField('Комментарий к варианту №2:', validators=[DataRequired('Заполните пункт комментария №2'),
-                                                                         Length(min=10, max=50)])
-    result_num_3 = StringField('Комментарий к варианту №3:', validators=[DataRequired('Заполните пункт комментария №3'),
-                                                                         Length(min=10, max=50)])
-    result_num_4 = StringField('Комментарий к варианту №4:', validators=[DataRequired('Заполните пункт комментария №4'),
-                                                                         Length(min=10, max=50)])
+    result_num_1 = StringField('Комментарий к варианту №1:', validators=[DataRequired(), Length(min=10, max=50)])
+    result_num_2 = StringField('Комментарий к варианту №2:', validators=[DataRequired(), Length(min=10, max=50)])
+    result_num_3 = StringField('Комментарий к варианту №3:', validators=[DataRequired(), Length(min=10, max=50)])
+    result_num_4 = StringField('Комментарий к варианту №4:', validators=[DataRequired(), Length(min=10, max=50)])
 
 
 # Форма теста для прохождения

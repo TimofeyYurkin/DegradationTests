@@ -12,6 +12,7 @@ class User(SqlAlchemyBase, SerializerMixin, UserMixin):
     name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     email = sqlalchemy.Column(sqlalchemy.String, nullable=False, unique=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    avatar = sqlalchemy.Column(sqlalchemy.BLOB, nullable=True)
 
     test = sqlalchemy.orm.relationship('Test', back_populates='user')
 

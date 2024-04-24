@@ -19,9 +19,16 @@
                     DegradationTests
                 </h1>
                 {% if current_user.is_authenticated %}
+                    {% if not current_user.avatar %}
+                        <img class="avatar" src="{{ url_for('static', filename='images/default_avatar.jpg') }}">
+                    {% else %}
+                        <img class="avatar" src="{{ url_for('user_avatar') }}">
+                    {% endif %}
                     <div class="collapse navbar-collapse">
-                        <div class="navbar-nav" style="margin-left: 60%; font-size: large;">
-                            <a class="nav-link active"><b>{{ current_user.name }}</b></a>
+                        <div class="navbar-nav" style="padding-left: 1%; font-size: large;">
+                            <a class="nav-link active"><b>
+                                {{ current_user.name }}
+                            </b></a>
                             <a class="nav-link" href="/logout">Выйти</a>
                             <a class="nav-link" href="/delete_user">Удалить аккаунт</a>
                             <a class="nav-link" href="/">На главную</a>

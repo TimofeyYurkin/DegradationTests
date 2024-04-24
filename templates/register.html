@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="" method="post" class="user_form">
+    <form action="" method="post" class="user_form" enctype="multipart/form-data" autocomplete="off">
         {{ form.hidden_tag() }}
         <h2>Регистрация</h2>
         <hr size="5px" color="#242424">
         <p>
-            {{ form.name.label }}<br>
-            {{ form.name(class="form-control", autocomplete="off") }}<br>
+            <b>{{ form.name.label }}</b><br>
+            {{ form.name(class="form-control", autocomplete="off") }}
             {% for error in form.name.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
@@ -15,8 +15,8 @@
             {% endfor %}
         </p>
         <p>
-            {{ form.email.label }}<br>
-            {{ form.email(class="form-control", type="email", autocomplete="off") }}<br>
+            <b>{{ form.email.label }}</b><br>
+            {{ form.email(class="form-control", type="email", autocomplete="off") }}
             {% for error in form.email.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
@@ -24,8 +24,8 @@
             {% endfor %}
         </p>
         <p>
-            {{ form.password.label }}<br>
-            {{ form.password(class="form-control", type="password", autocomplete="off") }}<br>
+            <b>{{ form.password.label }}</b><br>
+            {{ form.password(class="form-control", type="password", autocomplete="off") }}
             {% for error in form.password.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
@@ -33,9 +33,18 @@
             {% endfor %}
         </p>
         <p>
-            {{ form.password_again.label }}<br>
-            {{ form.password_again(class="form-control", type="password", autocomplete="off") }}<br>
+            <b>{{ form.password_again.label }}</b><br>
+            {{ form.password_again(class="form-control", type="password", autocomplete="off") }}
             {% for error in form.password_again.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            <b>{{ form.avatar.label }}</b><br>
+            {{ form.avatar(class="form-control", type="file") }}
+            {% for error in form.avatar.errors %}
                 <p class="alert alert-danger" role="alert">
                     {{ error }}
                 </p>

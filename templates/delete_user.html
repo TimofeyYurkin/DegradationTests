@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="" method="post" class="user_form">
+    <form action="" method="post" class="user_form" autocomplete="off">
         {{ form.hidden_tag() }}
         <h1>Удаление аккаунта</h1>
         <hr size="5px" color="#242424">
         <p>
-            {{ form.email.label }}<br>
-            {{ form.email(class="form-control", type="email", autocomplete="off") }}<br>
+            <b>{{ form.email.label }}</b><br>
+            {{ form.email(class="form-control", type="email", autocomplete="off") }}
             {% for error in form.email.errors %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}
@@ -15,8 +15,8 @@
             {% endfor %}
         </p>
         <p>
-            {{ form.password.label }}<br>
-            {{ form.password(class="form-control", type="password", autocomplete="off") }}<br>
+            <b>{{ form.password.label }}</b><br>
+            {{ form.password(class="form-control", type="password", autocomplete="off") }}
             {% for error in form.password.errors %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}

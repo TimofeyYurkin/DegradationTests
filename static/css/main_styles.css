@@ -13,3 +13,12 @@ div.content_display_choose {
     padding-top: 3%;
     padding-bottom: 5%;
 }
+
+img.avatar {
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    margin-left: 55%;
+}

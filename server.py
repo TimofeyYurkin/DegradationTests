@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, request, abort
+from flask import Flask, render_template, redirect, request, abort, make_response
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_restful import Api
+from sqlite3 import Binary
 from data import db_session, user_resources, test_resources, question_resources, answer_resources, results_resources
 from data.test_model import Test
 from data.question_model import Question
@@ -14,6 +15,7 @@ from data.user_model import User
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['JSON_SORT_KEYS'] = False
+MAX_CONTENT_LENGTH = 1024 * 1024
 
 api = Api(app)
 
@@ -66,9 +68,11 @@ def register():
         if session.query(User).filter(User.email == form.email.data).first():
             return render_template('register.html', title='DegradationTests', form=form, message="Эта почта уже занята")
         # Добавления пользователя в базу данных
+        image = form.avatar.data.read()
         user = User(
             name=form.name.data,
-            email=form.email.data
+            email=form.email.data,
+            avatar=Binary(image)
         )
         user.set_password(form.password.data)
         session.add(user)
@@ -440,6 +444,16 @@ def result_test(test_id, result):
     else:
         abort(404)
     return render_template('result_test.html', title='DegradationTests', result_message=result_message, test_id=test_id)
+
+
+# Роут для обработки картинки аватара
+@app.route('/user_avatar')
+@login_required
+def user_avatar():
+    image = current_user.avatar
+    response = make_response(image)
+    response.headers['Content-Type'] = 'image/png'
+    return response
 
 
 if __name__ == '__main__':
