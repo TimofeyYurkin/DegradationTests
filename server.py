@@ -60,6 +60,8 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+    if current_user:
+        return redirect('/')
     if form.validate_on_submit():
         session = db_session.create_session()
         # Проверка необходимых условий для создания пользователя
@@ -85,6 +87,8 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    if current_user:
+        return redirect('/')
     if form.validate_on_submit():
         session = db_session.create_session()
         user = session.query(User).filter(User.email == form.email.data).first()
@@ -104,6 +108,7 @@ def logout():
 
 
 @app.route('/delete_user', methods=['GET', 'POST'])
+@login_required
 def delete_user():
     form = DeleteForm()
     if form.validate_on_submit():
