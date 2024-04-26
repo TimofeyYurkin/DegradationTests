@@ -60,7 +60,7 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
-    if current_user:
+    if current_user.is_authenticated:
         return redirect('/')
     if form.validate_on_submit():
         session = db_session.create_session()
@@ -87,7 +87,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if current_user:
+    if current_user.is_authenticated:
         return redirect('/')
     if form.validate_on_submit():
         session = db_session.create_session()
