@@ -463,4 +463,3 @@ def user_avatar():
 
 if __name__ == '__main__':
     main()
-
