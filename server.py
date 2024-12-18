@@ -1,8 +1,7 @@
 from flask import Flask, render_template, redirect, request, abort, make_response
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from flask_restful import Api
 from sqlite3 import Binary
-from data import db_session, user_resources, test_resources, question_resources, answer_resources, results_resources
+from data import db_session
 from data.test_model import Test
 from data.question_model import Question
 from data.answer_model import Answer
@@ -17,33 +16,12 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['JSON_SORT_KEYS'] = False
 MAX_CONTENT_LENGTH = 1024 * 1024
 
-api = Api(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 
 def main():
-    # Ресурсы для пользователя
-    api.add_resource(user_resources.UserResource, '/api/users/<int:user_id>')
-    api.add_resource(user_resources.UserListResource, '/api/users')
-
-    # Ресурсы для тестов
-    api.add_resource(test_resources.TestResource, '/api/tests/<int:test_id>')
-    api.add_resource(test_resources.TestListResource, '/api/tests')
-
-    # Ресурсы для вопросов
-    api.add_resource(question_resources.QuestionResource, '/api/questions/<int:question_id>')
-    api.add_resource(question_resources.QuestionListResource, '/api/questions')
-
-    # Ресурсы для ответов
-    api.add_resource(answer_resources.AnswerResource, '/api/answers/<int:answer_id>')
-    api.add_resource(answer_resources.AnswerListResource, '/api/answers')
-
-    # Ресурсы для результатов
-    api.add_resource(results_resources.ResultResource, '/api/results/<int:result_id>')
-    api.add_resource(results_resources.ResultListResource, '/api/results')
-
     db_session.global_init('db/degradation_tests.db')
     app.run(port=8080)
 
